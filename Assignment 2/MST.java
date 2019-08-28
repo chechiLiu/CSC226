@@ -176,6 +176,7 @@ public class MST {
 		return totalWeight;
     	}	
 	
+	//Provided
    	public static void main(String[] args) {
 		int graphNum = 0;
 		Scanner s;
