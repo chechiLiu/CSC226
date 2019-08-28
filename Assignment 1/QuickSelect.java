@@ -5,6 +5,8 @@
 //	Input: An array A of n integers and an integer k in the set {1, 2, . . . , n}.
 //	Output: The kth smallest element of A.
 
+//For an input array containing n values, the optimal implementation is O(n).
+
 import java.util.*;
 
 public class QuickSelect {
