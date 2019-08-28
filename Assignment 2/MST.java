@@ -40,17 +40,13 @@
    (tweaked by N. Mehta - 10/3/2017)
 */
 
-
-//Che-Chi Jack Liu
+//Che-Chi (Jack) Liu
 //V00850558
-
 
 import java.util.*;
 import java.io.File;
 
-
 public class MST {
-
 	public static class QUUF {
 		private int[] name;
 		private int[] size;
@@ -58,28 +54,29 @@ public class MST {
 		public QUUF(int nv) {
 			name = new int[nv];
 			//each index is the element at each index 
-			for(int i=0; i<nv; i++) {
+			for(int i = 0; i < nv; i++) {
 				name[i] = i;
 			}
 
 			size = new int[nv];
 			//the size at root, is 1 at first.
-			for(int i=0; i<nv; i++) {
+			for(int i = 0; i < nv; i++) {
 				size[i] = 1;
 			}
 		}
-
+		
 		private int root(int x) {
 			while(x != name[x]) {
 				x = name[x];
 			}
+			
 			return x;
 		}
 
 		public boolean isConnected(int x, int y) {
 			return root(x) == root(y);
 		}
-
+		
 		public void union(int x, int y) {
 			int fr = root(x);
 			int sr = root(y);
@@ -93,13 +90,10 @@ public class MST {
 			}
 		}
 	}
-
-
-	//for Edges between v and w, row and columns
-	//returnweight method is created
-
+	
+	//for Edges between v and w, rows and columns
+	//returnWeight method is created
 	public static class Edge implements Comparable<Edge> {
-
 		private final int v, w;
 		private final int weight;
 
@@ -112,7 +106,7 @@ public class MST {
 		public int either() {
 			return v;
 		}
-
+		
 		public int returnWeight() {
 			return weight;
 		}
@@ -120,43 +114,43 @@ public class MST {
 		public int other(int vertex) {
 			if(vertex == v) {
 				return w;
-			}else{
+			}else {
 				return v;
 			}
 		}
-
+		
 		public int compareTo(Edge that) {
 			if(this.weight < that.weight) {
 				return -1;
 			}else if(this.weight > that.weight) {
 				return 1;
-			}else{
+			}else {
 				return 0;
 			}
 		}
 	}
 
-    /* mst(G)
-       Given an adjacency matrix for graph G, return the total weight
-       of all edges in a minimum spanning tree.
-		
-       If G[i][j] == 0, there is no edge between vertex i and vertex j
-       If G[i][j] > 0, there is an edge between vertices i and j, and the
-       value of G[i][j] gives the weight of the edge.
-       No entries of G will be negative.
-    */
-   static int mst(int[][] G) {
-
+   	/* mst(G)
+       	Given an adjacency matrix for graph G, return the total weight
+       	of all edges in a minimum spanning tree.
+			
+       	If G[i][j] == 0, there is no edge between vertex i and vertex j
+       	If G[i][j] > 0, there is an edge between vertices i and j, and the
+       	value of G[i][j] gives the weight of the edge.
+       	No entries of G will be negative.
+    	*/
+   	static int mst(int[][] G) {
 		int numVerts = G.length;
-		int count= 0;
+		
+		/* Find a minimum spanning tree using Kruskal's algorithm */
+		int count = 0;
 		int totalWeight = 0;
 
 		PriorityQueue<Edge> queue = new PriorityQueue<Edge>();
 
-		for(int row= 0; row < numVerts; row++) {
-			for(int column=0; column < G[0].length; column++) {
+		for(int row = 0; row < numVerts; row++) {
+			for(int column = 0; column < G[0].length; column++) {
 				if(G[row][column] > 0) {
-
 					Edge ed = new Edge(row, column, G[row][column]);
 					Edge old = new Edge(column, row, G[row][column]);
 
@@ -166,7 +160,7 @@ public class MST {
 				}
 			}
 		}
-
+		
 		QUUF wuf = new QUUF(numVerts);
 
 		while(queue.size() != 0 && count < numVerts -1) {
@@ -180,93 +174,91 @@ public class MST {
 		}
 
 		return totalWeight;
-    }
+    	}	
+	
+   	public static void main(String[] args) {
+		int graphNum = 0;
+		Scanner s;
 
-
-    public static void main(String[] args) {
-	/* Code to test your implementation */
-	/* You may modify this, but nothing in this function will be marked */
-
-	int graphNum = 0;
-	Scanner s;
-
-	if (args.length > 0) {
-	    //If a file argument was provided on the command line, read from the file
-	    try {
-		s = new Scanner(new File(args[0]));
-	    }
-	    catch(java.io.FileNotFoundException e) {
-		System.out.printf("Unable to open %s\n",args[0]);
-		return;
-	    }
-	    System.out.printf("Reading input values from %s.\n",args[0]);
-	}
-	else {
-	    //Otherwise, read from standard input
-	    s = new Scanner(System.in);
-	    System.out.printf("Reading input values from stdin.\n");
-	}
-		
-	//Read graphs until EOF is encountered (or an error occurs)
-	while(true) {
-	    graphNum++;
-	    if(!s.hasNextInt()) {
-		break;
-	    }
-	    System.out.printf("Reading graph %d\n",graphNum);
-	    int n = s.nextInt();
-	    int[][] G = new int[n][n];
-	    int valuesRead = 0;
-	    for (int i = 0; i < n && s.hasNextInt(); i++) {
-		G[i] = new int[n];
-		for (int j = 0; j < n && s.hasNextInt(); j++) {
-		    G[i][j] = s.nextInt();
-		    valuesRead++;
+		if (args.length > 0) {
+	    		//If a file argument was provided on the command line, read from the file
+	    		try {
+				s = new Scanner(new File(args[0]));
+	    		}
+	    		catch (java.io.FileNotFoundException e) {
+				System.out.printf("Unable to open %s\n",args[0]);
+				return;
+	    		}
+	    		System.out.printf("Reading input values from %s.\n",args[0]);
+		}else {
+	    		//Otherwise, read from standard input
+	    		s = new Scanner(System.in);
+	    		System.out.printf("Reading input values from stdin.\n");
 		}
-	    }
-	    if (valuesRead < n * n) {
-		System.out.printf("Adjacency matrix for graph %d contains too few values.\n",graphNum);
-		break;
-	    }
-	    if (!isConnected(G)) {
-		System.out.printf("Graph %d is not connected (no spanning trees exist...)\n",graphNum);
-		continue;
-	    }
-	    int totalWeight = mst(G);
-	    System.out.printf("Graph %d: Total weight of MST is %d\n",graphNum,totalWeight);
-				
-	}
-    }
+		
+		//Read graphs until EOF is encountered (or an error occurs)
+		while(true) {
+	    		graphNum++;
+	    		if(!s.hasNextInt()) {
+				break;
+	    		}
+	    		System.out.printf("Reading graph %d\n",graphNum);
+	    		int n = s.nextInt();
+	    		int[][] G = new int[n][n];
+	    		int valuesRead = 0;
+	    		for (int i = 0; i < n && s.hasNextInt(); i++) {
+				G[i] = new int[n];
+				for (int j = 0; j < n && s.hasNextInt(); j++) {
+		    			G[i][j] = s.nextInt();
+		    			valuesRead++;
+				}
+	    		}
+	    		if(valuesRead < n * n) {
+				System.out.printf("Adjacency matrix for graph %d contains too few values.\n",graphNum);
+				break;
+	    		}
+	    		if(!isConnected(G)) {
+				System.out.printf("Graph %d is not connected (no spanning trees exist...)\n",graphNum);
+				continue;
+	    		}
+	    		int totalWeight = mst(G);
+	    		System.out.printf("Graph %d: Total weight of MST is %d\n",graphNum,totalWeight);
+		}
+    	}
 
-    /* isConnectedDFS(G, covered, v)
-       Used by the isConnected function below.
-       You may modify this, but nothing in this function will be marked.
-    */
-    static void isConnectedDFS(int[][] G, boolean[] covered, int v) {
-	covered[v] = true;
-	for (int i = 0; i < G.length; i++) {
-	    if (G[v][i] > 0 && !covered[i]) {
-		isConnectedDFS(G,covered,i);
-	    }
-	}
-    }
+    	/* isConnectedDFS(G, covered, v)
+       	Used by the isConnected function below.
+       	You may modify this, but nothing in this function will be marked.
+    	*/
+	
+	//Provided
+    	static void isConnectedDFS(int[][] G, boolean[] covered, int v) {
+		covered[v] = true;
+		for(int i = 0; i < G.length; i++) {
+	    		if(G[v][i] > 0 && !covered[i]) {
+				isConnectedDFS(G,covered,i);
+	    		}
+		}
+    	}
 	   
-    /* isConnected(G)
-       Test whether G is connected.
-       You may modify this, but nothing in this function will be marked.
-    */
-    static boolean isConnected(int[][] G) {
-	boolean[] covered = new boolean[G.length];
-	for (int i = 0; i < covered.length; i++) {
-	    covered[i] = false;
-	}
-	isConnectedDFS(G,covered,0);
-	for (int i = 0; i < covered.length; i++) {
-	    if (!covered[i]) {
-		return false;
-	    }
-	}
-	return true;
-    }
-    
+    	/* isConnected(G)
+       	Test whether G is connected.
+       	You may modify this, but nothing in this function will be marked.
+    	*/
+	
+	//Provided
+    	static boolean isConnected(int[][] G) {
+		boolean[] covered = new boolean[G.length];
+		for (int i = 0; i < covered.length; i++) {
+	    		covered[i] = false;
+		}
+		isConnectedDFS(G,covered,0);
+		for (int i = 0; i < covered.length; i++) {
+	    		if (!covered[i]) {
+				return false;
+	    		}
+		}
+		
+		return true;
+    	}
 }
