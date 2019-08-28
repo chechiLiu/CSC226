@@ -32,8 +32,9 @@
 /*
 Input: A weighted graph G of n vertices. Each edge weight corresponds
 to the time to travel between two locations.
-	Output: For each charging station, the shortest path from the starting
-	location to that charging station and the total distance of the trip
+
+Output: For each charging station, the shortest path from the starting
+location to that charging station and the total distance of the trip
 	
 The implemented algorithm is Dijkstra’s algorithm. The running time is at most O(V^2 + E log V ),
 where the V^2 is due to the cost of reading the adjacency matrix.
