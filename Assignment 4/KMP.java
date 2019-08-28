@@ -60,6 +60,7 @@ public class KMP {
     		return txt.length();
    	}
 	
+	//Provided
     	public static void main(String[] args) throws FileNotFoundException {
 		Scanner s;
 		if(args.length > 0) {
