@@ -114,8 +114,14 @@ public class QuickSelect {
 	}
 	
    	public static void main(String[] args) {
-    		int[] A = {8, 7, 6, 5, 4, 3, 2};
+		int[] A = {23, 31, 3, 2, 19, 3, 100};
 		
+		System.out.println("The input int array is: ");
+		for(int a: A) {
+			System.out.print(a+" ");
+		}
+		
+		System.out.println("\n");
     		System.out.println("The median is " + QuickSelect(A, (A.length+1)/2));
 	}
 }
